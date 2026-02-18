@@ -13,6 +13,7 @@
     --text:#222;
     --muted:#666;
     --border:#e5e2db;
+    color-scheme:light;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -34,6 +35,17 @@ header{
     text-align:center;
     padding:4rem 1.5rem 2rem;
     border-bottom:1px solid var(--border);
+}
+
+.header-title{
+    display:inline-flex;
+    align-items:center;
+    gap:1rem;
+}
+
+.header-title img{
+    height:3.5rem;
+    width:auto;
 }
 
 h1{
@@ -112,18 +124,108 @@ h2{
 
 .photo-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:1rem;
+    grid-template-columns:repeat(2,1fr);
+    gap:1.5rem;
 }
 
-.photo-grid div{
-    aspect-ratio:4/3;
-    background:#ddd;
+.photo-grid img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    aspect-ratio:1/1;
+    display:block;
+    cursor:pointer;
+    border-radius:4px;
+    transition:opacity 0.2s;
+}
+
+.photo-grid img:hover{
+    opacity:0.8;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-content{
+    position:relative;
+    max-width:90vw;
+    max-height:90vh;
+}
+
+.modal img{
+    width:100%;
+    height:auto;
+    max-height:90vh;
+    object-fit:contain;
+}
+
+.modal-button{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(255,255,255,0.8);
+    border:none;
+    color:#222;
+    font-size:1.5rem;
+    padding:1rem;
+    cursor:pointer;
+    border-radius:4px;
+    transition:background 0.2s;
+    width:50px;
+    height:50px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:.8rem;
-    color:#777;
+}
+
+.modal-button:hover{
+    background:rgba(255,255,255,1);
+}
+
+.modal-prev{
+    left:1rem;
+}
+
+.modal-next{
+    right:1rem;
+}
+
+.modal-close{
+    position:absolute;
+    top:1rem;
+    right:1rem;
+    background:rgba(255,255,255,0.8);
+    border:none;
+    color:#222;
+    font-size:1.5rem;
+    padding:0.5rem 1rem;
+    cursor:pointer;
+    border-radius:4px;
+    transition:background 0.2s;
+}
+
+.modal-close:hover{
+    background:rgba(255,255,255,1);
+}
+
+@media(max-width:600px){
+    .photo-grid{
+        grid-template-columns:1fr;
+    }
 }
 
 .video{
@@ -153,18 +255,17 @@ footer{
     padding:2rem 1rem;
 }
 
-@media(max-width:600px){
-    .meta-grid{
-        grid-template-columns:1fr;
-    }
-}
+
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>SPD LMT</h1>
+    <div class="header-title">
+        <img src="assets/speed.png" alt="Speed limit sign">
+        <h1>SPD LMT</h1>
+    </div>
     <div class="tagline">midwest emo • indie pop • folk rock</div>
 </header>
 
@@ -181,10 +282,10 @@ footer{
 <section id="bio" class="bio">
     <h2>Bio</h2>
     <p>
-        SPD LMT blends the introspective honesty of midwest emo with the melodic warmth of indie pop and the storytelling heart of folk rock. Influenced by artists like MJ Lenderman and Neil Young, their songs feel intimate, direct, and unguarded.
+        Hi we're SPD LMT we play music sometimes when we aren't busy being engineers (and a comp sci). Pls book us for shows and stuff :)
     </p>
     <p>
-        With a debut EP completed and live demos forthcoming, SPD LMT is focused on building a strong regional presence and connecting through honest performance.
+        Debut EP coming May 2026.
     </p>
 
     <div class="meta-grid">
@@ -199,28 +300,29 @@ footer{
     <h2>Music</h2>
 
     <div class="release">
+        <div class="release-title">Live Demos</div>
+        <div class="release-meta">Coming Soon</div>
+    </div>
+
+    <div class="release">
         <div class="release-title">Laclede Station</div>
-        <div class="release-meta">2025 • [Duration]</div>
-        <ul class="tracklist">
+        <div class="release-meta">2026 • Coming Soon</div>
+        <!-- <ul class="tracklist">
             <li>01. Hopeless</li>
             <li>02. Spark</li>
             <li>03. Omatidia</li>
             <li>04. John's</li>
-        </ul>
-    </div>
-
-    <div class="release">
-        <div class="release-title">Live Demos</div>
-        <div class="release-meta">Coming Soon</div>
+        </ul> -->
     </div>
 </section>
 
 <section id="photos">
     <h2>Photos</h2>
-    <div class="photo-grid">
-        <div>Band Photo</div>
-        <div>Live Photo</div>
-        <div>Studio Photo</div>
+    <div class="photo-grid" id="photoGrid">
+        <img src="assets/band-up.jpg" alt="BandUp STL @ Handlebar">
+        <img src="assets/show-birds.jpg" alt="Showbirds">
+        <img src="assets/seven-man.jpg" alt="First appearance 2022">
+        <img src="assets/studio.jpg" alt="Studio session">
     </div>
 </section>
 
@@ -238,9 +340,64 @@ footer{
 
 </div>
 
+<div class="modal" id="photoModal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <button class="modal-button modal-prev" onclick="prevPhoto()">&lsaquo;</button>
+    <div class="modal-content">
+        <img id="modalImage" src="" alt="">
+    </div>
+    <button class="modal-button modal-next" onclick="nextPhoto()">&rsaquo;</button>
+</div>
+
 <footer>
     © 2025 SPD LMT — Electronic Press Kit
 </footer>
+
+<script>
+const photos = [
+    'assets/band-up.jpg',
+    'assets/show-birds.jpg',
+    'assets/speed limit.jpg',
+    'assets/studio.jpg'
+];
+let currentIndex = 0;
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    const photoGrid = document.getElementById('photoGrid');
+    const images = photoGrid.querySelectorAll('img');
+    images.forEach((img, index)=>{
+        img.addEventListener('click', ()=>openModal(index));
+    });
+    
+    document.addEventListener('keydown', (e)=>{
+        if(document.getElementById('photoModal').classList.contains('active')){
+            if(e.key==='ArrowLeft') prevPhoto();
+            if(e.key==='ArrowRight') nextPhoto();
+            if(e.key==='Escape') closeModal();
+        }
+    });
+});
+
+function openModal(index){
+    currentIndex = index;
+    document.getElementById('photoModal').classList.add('active');
+    document.getElementById('modalImage').src = photos[currentIndex];
+}
+
+function closeModal(){
+    document.getElementById('photoModal').classList.remove('active');
+}
+
+function nextPhoto(){
+    currentIndex = (currentIndex + 1) % photos.length;
+    document.getElementById('modalImage').src = photos[currentIndex];
+}
+
+function prevPhoto(){
+    currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+    document.getElementById('modalImage').src = photos[currentIndex];
+}
+</script>
 
 </body>
 </html>
