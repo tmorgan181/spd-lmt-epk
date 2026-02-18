@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPD LMT — Electronic Press Kit</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Karla:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#faf8f4;
+    --text:#222;
+    --muted:#666;
+    --border:#e5e2db;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Karla',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+}
+
+.container{
+    max-width:800px;
+    margin:0 auto;
+    padding:3rem 1.5rem;
+}
+
+header{
+    text-align:center;
+    padding:4rem 1.5rem 2rem;
+    border-bottom:1px solid var(--border);
+}
+
+h1{
+    font-family:'Libre Baskerville',serif;
+    font-size:3rem;
+    letter-spacing:1px;
+}
+
+.tagline{
+    margin-top:.5rem;
+    color:var(--muted);
+    font-size:.95rem;
+}
+
+nav{
+    text-align:center;
+    padding:1rem 0;
+    border-bottom:1px solid var(--border);
+}
+
+nav a{
+    text-decoration:none;
+    color:var(--muted);
+    margin:0 .75rem;
+    font-size:.9rem;
+}
+
+nav a:hover{
+    color:var(--text);
+}
+
+section{
+    padding:3rem 0;
+    border-bottom:1px solid var(--border);
+}
+
+h2{
+    font-family:'Libre Baskerville',serif;
+    font-size:1.5rem;
+    margin-bottom:1.5rem;
+}
+
+.bio p{
+    margin-bottom:1rem;
+}
+
+.meta-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+    margin-top:1.5rem;
+    font-size:.9rem;
+    color:var(--muted);
+}
+
+.release{
+    margin-bottom:2rem;
+}
+
+.release-title{
+    font-weight:600;
+    margin-bottom:.25rem;
+}
+
+.release-meta{
+    font-size:.85rem;
+    color:var(--muted);
+    margin-bottom:.75rem;
+}
+
+.tracklist{
+    list-style:none;
+    font-size:.9rem;
+    color:var(--muted);
+}
+
+.photo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:1rem;
+}
+
+.photo-grid div{
+    aspect-ratio:4/3;
+    background:#ddd;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:.8rem;
+    color:#777;
+}
+
+.video{
+    aspect-ratio:16/9;
+    background:#ddd;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:.9rem;
+    color:#777;
+}
+
+.quote{
+    font-style:italic;
+    margin-bottom:1rem;
+}
+
+.contact p{
+    margin-bottom:.5rem;
+    font-size:.9rem;
+}
+
+footer{
+    text-align:center;
+    font-size:.8rem;
+    color:var(--muted);
+    padding:2rem 1rem;
+}
+
+@media(max-width:600px){
+    .meta-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>SPD LMT</h1>
+    <div class="tagline">midwest emo • indie pop • folk rock</div>
+</header>
+
+<nav>
+    <a href="#bio">Bio</a>
+    <a href="#music">Music</a>
+    <a href="#photos">Photos</a>
+    <a href="#video">Video</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<div class="container">
+
+<section id="bio" class="bio">
+    <h2>Bio</h2>
+    <p>
+        SPD LMT blends the introspective honesty of midwest emo with the melodic warmth of indie pop and the storytelling heart of folk rock. Influenced by artists like MJ Lenderman and Neil Young, their songs feel intimate, direct, and unguarded.
+    </p>
+    <p>
+        With a debut EP completed and live demos forthcoming, SPD LMT is focused on building a strong regional presence and connecting through honest performance.
+    </p>
+
+    <div class="meta-grid">
+        <div><strong>Formed:</strong> 2021</div>
+        <div><strong>Location:</strong> St. Louis, MO</div>
+        <div><strong>Genre:</strong> Indie Rock</div>
+        <div><strong>Status:</strong> Active</div>
+    </div>
+</section>
+
+<section id="music">
+    <h2>Music</h2>
+
+    <div class="release">
+        <div class="release-title">Laclede Station</div>
+        <div class="release-meta">2025 • [Duration]</div>
+        <ul class="tracklist">
+            <li>01. Hopeless</li>
+            <li>02. Spark</li>
+            <li>03. Omatidia</li>
+            <li>04. John's</li>
+        </ul>
+    </div>
+
+    <div class="release">
+        <div class="release-title">Live Demos</div>
+        <div class="release-meta">Coming Soon</div>
+    </div>
+</section>
+
+<section id="photos">
+    <h2>Photos</h2>
+    <div class="photo-grid">
+        <div>Band Photo</div>
+        <div>Live Photo</div>
+        <div>Studio Photo</div>
+    </div>
+</section>
+
+<section id="video">
+    <h2>Video</h2>
+    <div class="video">Live Performance Video</div>
+</section>
+
+<section id="contact" class="contact">
+    <h2>Contact</h2>
+    <p><strong>Email:</strong> spdlmttheband@gmail.com</p>
+    <p><strong>Instagram:</strong> @speedlimittheband</p>
+    <p><strong>Spotify:</strong> @spdlmt</p>
+</section>
+
+</div>
+
+<footer>
+    © 2025 SPD LMT — Electronic Press Kit
+</footer>
+
+</body>
+</html>
