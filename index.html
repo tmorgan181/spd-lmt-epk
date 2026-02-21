@@ -17,7 +17,7 @@
     color-scheme:only light;
 }
 
-html{background:#1a1917;}
+html{background:#1a1917;scroll-padding-top:3.5rem;}
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
@@ -408,6 +408,7 @@ h2{
     display:flex;
     align-items:center;
     justify-content:center;
+    z-index:1;
 }
 
 .modal-button:hover{
@@ -706,6 +707,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
     const modal = document.getElementById('photoModal');
     modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
+    window.addEventListener('popstate', ()=>{ if(modal.classList.contains('active')) modal.classList.remove('active'); });
     let tx=0;
     modal.addEventListener('touchstart', (e)=>{ tx=e.changedTouches[0].clientX; }, {passive:true});
     modal.addEventListener('touchend', (e)=>{
@@ -714,8 +716,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }, {passive:true});
 });
 
-function openModal(i){ currentIndex=i; document.getElementById('photoModal').classList.add('active'); document.getElementById('modalImage').src=photos[i]; }
-function closeModal(){ document.getElementById('photoModal').classList.remove('active'); }
+function openModal(i){ currentIndex=i; document.getElementById('photoModal').classList.add('active'); document.getElementById('modalImage').src=photos[i]; history.pushState({modal:true},''); }
+function closeModal(){ document.getElementById('photoModal').classList.remove('active'); if(history.state?.modal) history.back(); }
 function nextPhoto(){ currentIndex=(currentIndex+1)%photos.length; document.getElementById('modalImage').src=photos[currentIndex]; }
 function prevPhoto(){ currentIndex=(currentIndex-1+photos.length)%photos.length; document.getElementById('modalImage').src=photos[currentIndex]; }
 
@@ -813,7 +815,7 @@ makePlayer(audio, {
     else audio.paused ? audio.play() : audio.pause();
 });
 
-audio.addEventListener('play',  ()=>{ document.querySelectorAll('.demo-track')[currentTrack]?.classList.add('playing'); });
+audio.addEventListener('play',  ()=>{ document.querySelectorAll('.demo-track')[currentTrack]?.classList.add('playing'); if(ytPlayer?.pauseVideo) ytPlayer.pauseVideo(); });
 audio.addEventListener('pause', ()=>{ document.querySelectorAll('.demo-track')[currentTrack]?.classList.remove('playing'); });
 audio.addEventListener('ended', ()=>{
     document.querySelectorAll('.demo-track')[currentTrack]?.classList.remove('playing');
@@ -846,9 +848,8 @@ window.onYouTubeIframeAPIReady=function(){
         playerVars:{playsinline:1,rel:0},
         events:{
             onStateChange:function(e){
-                if(e.data===YT.PlayerState.ENDED){
-                    ytPlayer.loadVideoById('dQw4w9WgXcQ');
-                }
+                if(e.data===YT.PlayerState.PLAYING){ audio.pause(); }
+                if(e.data===YT.PlayerState.ENDED){ ytPlayer.loadVideoById('dQw4w9WgXcQ'); }
             }
         }
     });
