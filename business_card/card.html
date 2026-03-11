@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPD LMT — Business Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Karla:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --bg: #1a1917;
+    --text: #f0ede8;
+    --muted: #777;
+    --border: #2e2e2c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0f0f0e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 52px;
+    padding: 52px;
+  }
+
+  .label {
+    color: #3a3a38;
+    font-family: 'Karla', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .card-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 3.5 x 2 in @ 192dpi = 672 x 384px */
+  .card {
+    width: 672px;
+    height: 384px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── FRONT ─────────────────────────────── */
+  .front {
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 205px 1fr;
+    align-items: stretch;
+  }
+
+  /* Logo panel — left side */
+  /* Info panel — left side */
+  .info-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 28px 20px 24px;
+    border-right: 1px solid var(--border);
+  }
+
+  /* Logo panel — right side */
+  .logo-panel {
+    background: #111110;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .logo-panel img {
+    width: 270px;
+    height: 270px;
+    object-fit: contain;
+    /* strip the black bg — the image has a black background so mix-blend-mode helps */
+    mix-blend-mode: screen;
+    filter: contrast(1.1);
+  }
+
+  .band-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 64px;
+    line-height: 0.88;
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .genre-line {
+    font-family: 'Karla', sans-serif;
+    font-size: 9.5px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    font-style: italic;
+    line-height: 1.7;
+    margin-top: 10px;
+  }
+
+  .front-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ep-line {
+    font-family: 'Karla', sans-serif;
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    margin-bottom: 2px;
+  }
+
+  .website-line {
+    font-family: 'Karla', sans-serif;
+    font-size: 10px;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    opacity: 0.75;
+  }
+
+  /* ── BACK ──────────────────────────────── */
+  .back {
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 32px 36px 32px 44px;
+    gap: 36px;
+  }
+
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .contact-row:last-child {
+    border-bottom: none;
+  }
+
+  .contact-type {
+    font-family: 'Karla', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    width: 62px;
+    flex-shrink: 0;
+  }
+
+  .contact-value {
+    font-family: 'Karla', sans-serif;
+    font-size: 11.5px;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .qr-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .qr-label {
+    font-family: 'Karla', sans-serif;
+    font-size: 7px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; gap: 0.3in; padding: 0.25in; }
+    .label { display: none; }
+    .card {
+      width: 3.5in;
+      height: 2in;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .front { grid-template-columns: 1.07in 1fr; }
+    .info-panel { padding: 14px 12px 12px; border-right: 1px solid var(--border); }
+    .logo-panel { padding: 8px; }
+    .logo-panel img { width: 140px; height: 140px; }
+    .band-name { font-size: 32px; }
+    .genre-line { font-size: 5.5px; margin-top: 5px; }
+    .ep-line { font-size: 5px; padding-top: 6px; }
+    .website-line { font-size: 5.5px; }
+    .back { padding: 16px 20px 16px 24px; gap: 20px; }
+    .contact-type { font-size: 5.5px; width: 36px; }
+    .contact-value { font-size: 7.5px; }
+    .contact-row { padding: 5px 0; }
+    #qrcode img, #qrcode canvas { width: 96px !important; height: 96px !important; }
+  }
+
+  .print-note {
+    color: #333;
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.9;
+    max-width: 560px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card-wrap">
+    <div class="label">Front</div>
+    <div class="card front">
+      <div class="info-panel">
+        <div>
+          <div class="band-name">SPD<br>LMT</div>
+          <div class="genre-line">indie rock · garage · midwest<br>st. louis, mo</div>
+        </div>
+        <div class="front-bottom">
+          <div class="ep-line">Debut EP — May 2026</div>
+          <div class="website-line">speedlimittheband.com</div>
+        </div>
+      </div>
+      <div class="logo-panel">
+        <img src="spdlmt-logo.png" alt="SPD LMT Speed Limit 420 logo">
+      </div>
+    </div>
+  </div>
+
+  <div class="card-wrap">
+    <div class="label">Back</div>
+    <div class="card back">
+      <div class="contact-list">
+        <div class="contact-row">
+          <span class="contact-type">Web</span>
+          <span class="contact-value">speedlimittheband.com</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-type">Email</span>
+          <span class="contact-value">speedlimittheband@gmail.com</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-type">Instagram</span>
+          <span class="contact-value">@speedlimittheband</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-type">Phone</span>
+          <span class="contact-value">660-853-8746</span>
+        </div>
+      </div>
+      <div class="qr-wrap">
+        <div id="qrcode"></div>
+        <span class="qr-label">scan me</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-note">
+    Keep spdlmt-logo.png in the same folder as this file.<br>
+    Take both to a print shop — 3.5" × 2" cards, matte or uncoated stock.
+  </div>
+
+<script>
+  new QRCode(document.getElementById("qrcode"), {
+    text: "https://speedlimittheband.com",
+    width: 200,
+    height: 200,
+    colorDark: "#f0ede8",
+    colorLight: "#1a1917",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+</script>
+
+</body>
+</html>
