@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SPD LMT — Business Card</title>
+<title>Speed Limit — Business Card</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Karla:wght@300;400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
@@ -57,36 +57,44 @@
   .front {
     background: var(--bg);
     display: grid;
-    grid-template-columns: 205px 1fr;
+    grid-template-columns: 245px 1fr;
     align-items: stretch;
   }
 
-  /* Logo panel — left side */
-  /* Info panel — left side */
-  .info-panel {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 28px 20px 24px;
-    border-right: 1px solid var(--border);
-  }
-
-  /* Logo panel — right side */
+  /* Logo panel — left side, smaller */
   .logo-panel {
     background: #111110;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
+    border-right: 1px solid var(--border);
   }
 
+/* 
   .logo-panel img {
-    width: 270px;
-    height: 270px;
+    width: 120%;
+    height: 120%;
+    object-fit: cover;
+    mix-blend-mode: screen;
+    filter: contrast(1.1);
+  } */
+
+  .logo-panel img {
+    width: 125%;
+    height: 125%;
     object-fit: contain;
     /* strip the black bg — the image has a black background so mix-blend-mode helps */
     mix-blend-mode: screen;
     filter: contrast(1.1);
+    margin-top: 50px;
+  }
+
+  /* Info panel — right side, more space */
+  .info-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 28px 20px 24px;
   }
 
   .band-name {
@@ -205,9 +213,9 @@
       print-color-adjust: exact;
     }
     .front { grid-template-columns: 1.07in 1fr; }
-    .info-panel { padding: 14px 12px 12px; border-right: 1px solid var(--border); }
-    .logo-panel { padding: 8px; }
-    .logo-panel img { width: 140px; height: 140px; }
+    .logo-panel { padding: 0px; border-right: 1px solid var(--border); }
+    .logo-panel img { max-width: 140px; max-height: 140px; }
+    .info-panel { padding: 14px 12px 12px; }
     .band-name { font-size: 32px; }
     .genre-line { font-size: 5.5px; margin-top: 5px; }
     .ep-line { font-size: 5px; padding-top: 6px; }
@@ -234,18 +242,18 @@
   <div class="card-wrap">
     <div class="label">Front</div>
     <div class="card front">
+      <!-- <div class="logo-panel">
+        <img src="spdlmt-logo.png" alt="Speed Limit logo">
+      </div> -->
       <div class="info-panel">
         <div>
-          <div class="band-name">SPD<br>LMT</div>
-          <div class="genre-line">indie rock · garage · midwest<br>st. louis, mo</div>
+          <div class="band-name">Speed<br>Limit</div>
+          <div class="genre-line">indie rock · midwest emo · folk rock<br>st. louis, mo</div>
         </div>
         <div class="front-bottom">
           <div class="ep-line">Debut EP — May 2026</div>
           <div class="website-line">speedlimittheband.com</div>
         </div>
-      </div>
-      <div class="logo-panel">
-        <img src="spdlmt-logo.png" alt="SPD LMT Speed Limit 420 logo">
       </div>
     </div>
   </div>
